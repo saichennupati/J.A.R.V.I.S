@@ -12,18 +12,24 @@ def speak(audio):
 
 
 def speak_news():
-    url = 'http://newsapi.org/v2/top-headlines?sources=the-times-of-india&apiKey=yourapikey'
-    news = requests.get(url).text
-    news_dict = json.loads(news)
-    arts = news_dict['articles']
-    speak('Source: The Times Of India')
-    speak('Todays Headlines are..')
-    for index, articles in enumerate(arts):
-        speak(articles['title'])
-        if index == len(arts)-1:
-            break
-        speak('Moving on the next news headline..')
-    speak('These were the top headlines, Have a nice day Sir!!..')
+    try:
+        url = 'http://newsapi.org/v2/top-headlines?sources=the-times-of-india&apiKey=yourapikey'
+        news = requests.get(url).text
+        news_dict = json.loads(news)
+        if news_dict.get('status') == 'ok':
+            arts = news_dict['articles']
+            speak('Source: The Times Of India')
+            speak('Todays Headlines are..')
+            for index, articles in enumerate(arts):
+                speak(articles['title'])
+                if index == len(arts)-1:
+                    break
+                speak('Moving on the next news headline..')
+            speak('These were the top headlines, Have a nice day Sir!!..')
+        else:
+            speak('Sorry, unable to fetch news. Please check your API key.')
+    except Exception as e:
+        speak('Sorry, there was an error fetching the news.')
 
 def getNewsUrl():
     return 'http://newsapi.org/v2/top-headlines?sources=the-times-of-india&apiKey=yourapikey'

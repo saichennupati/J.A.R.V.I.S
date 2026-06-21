@@ -28,10 +28,10 @@ class Jarvis:
             self.chrome_path = '/usr/bin/google-chrome'
 
         elif platform == "darwin":
-            self.chrome_path = 'open -a /Applications/Google\ Chrome.app'
+            self.chrome_path = r'open -a /Applications/Google\ Chrome.app'
 
         elif platform == "win32":
-            self.chrome_path = 'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe'
+            self.chrome_path = r'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe'
         else:
             print('Unsupported OS')
             exit(1)
@@ -56,8 +56,8 @@ class Jarvis:
         server = smtplib.SMTP('smtp.gmail.com', 587)
         server.ehlo()
         server.starttls()
-        server.login('email', 'password')
-        server.sendmail('email', to, content)
+        server.login('your_email@gmail.com', 'your_password')  # Replace with actual credentials
+        server.sendmail('your_email@gmail.com', to, content)
         server.close()
 
     def execute_query(self, query):
@@ -84,7 +84,7 @@ class Jarvis:
         if 'jarvis are you there' in query:
             speak("Yes Sir, at your service")
         if 'jarvis who made you' in query:
-            speak("Yes Sir, my master build me in AI")
+            speak("You I guess")
             
          
 
@@ -137,7 +137,7 @@ class Jarvis:
             speak('Here is the location ' + location)
 
         elif 'your master' in query:
-            if platform == "win32" or "darwin":
+            if platform == "win32" or platform == "darwin":
                 speak('Gaurav is my master. He created me couple of days ago')
             elif platform == "linux" or platform == "linux2":
                 name = getpass.getuser()
@@ -150,30 +150,22 @@ class Jarvis:
             
         elif 'stands for' in query:
             speak('J.A.R.V.I.S stands for JUST A RATHER VERY INTELLIGENT SYSTEM')
+
         elif 'open code' in query:
             if platform == "win32":
                 os.startfile(
                     "C:\\Users\\gs935\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe")
-            elif platform == "linux" or platform == "linux2" or "darwin":
+            elif platform == "linux" or platform == "linux2" or platform == "darwin":
                 os.system('code .')
 
         elif 'shutdown' in query:
             if platform == "win32":
                 os.system('shutdown /p /f')
-            elif platform == "linux" or platform == "linux2" or "darwin":
+            elif platform == "linux" or platform == "linux2" or platform == "darwin":
                 os.system('poweroff')
 
-        elif 'cpu' in query:
-            cpu()
         elif 'your friend' in query:
             speak('My friends are Google assisstant alexa and siri')
-
-        elif 'joke' in query:
-            joke()
-
-        elif 'screenshot' in query:
-            speak("taking screenshot")
-            screenshot()
 
         elif 'github' in query:
             webbrowser.get('chrome').open_new_tab(
@@ -194,6 +186,18 @@ class Jarvis:
         elif 'sleep' in query:
             sys.exit()
 
+        elif 'restart' in query:
+            speak('Restarting the pc now')
+            os.system('shutdown /r /f')
+
+        elif'sleep the pc' in query:
+            speak('sleeping the pc now')
+            os.system('rundll32.exe powrprof.dll,SetSuspendState 0,1,0')
+
+        elif 'lock the pc' in query:
+            speak('locking the pc now')
+            os.system('rundll32.exe user32.dll, LockWorkStation')
+
         elif 'dictionary' in query:
             speak('What you want to search in your intelligent dictionary?')
             translate(takeCommand())
@@ -210,14 +214,7 @@ class Jarvis:
             else:
                 speak('No Problem Sir')
 
-        elif 'voice' in query:
-            if 'female' in query:
-                engine.setProperty('voice', voices[0].id)
-            else:
-                engine.setProperty('voice', voices[1].id)
-            speak("Hello Sir, I have switched my voice. How is it?")
-
-        elif 'email to gaurav' in query:
+        elif 'email' in query:
             try:
                 speak('What should I say?')
                 content = takeCommand()
@@ -240,7 +237,12 @@ def wakeUpJARVIS():
 if __name__ == '__main__':
     
     recognizer = cv2.face.LBPHFaceRecognizer_create() # Local Binary Patterns Histograms
-    recognizer.read('./Face-Recognition/trainer/trainer.yml')   #load trained model
+    try:
+        recognizer.read('./Face-Recognition/trainer/trainer.yml')   #load trained model
+    except Exception as e:
+        speak("Face recognition model not loaded. Starting without face recognition.")
+        wakeUpJARVIS()
+        exit()
     cascadePath = "./Face-Recognition/haarcascade_frontalface_default.xml"
     faceCascade = cv2.CascadeClassifier(cascadePath) #initializing haar cascade for object detection approach
 
@@ -254,6 +256,10 @@ if __name__ == '__main__':
 
 
     cam = cv2.VideoCapture(0, cv2.CAP_DSHOW) #cv2.CAP_DSHOW to remove warning
+    if not cam.isOpened():
+        speak("Camera not available. Starting Jarvis without face recognition.")
+        wakeUpJARVIS()
+        exit()
     cam.set(3, 640) # set video FrameWidht
     cam.set(4, 480) # set video FrameHeight
 
@@ -286,13 +292,13 @@ if __name__ == '__main__':
             if (accuracy < 100):
                 
                 # Do a bit of cleanup
-                speak("Optical Face Recognition Done. Welcome")
+                speak("Optical Face Recognition Done. Welcome back!")
                 cam.release()
                 cv2.destroyAllWindows()
                 wakeUpJARVIS()
             else:
                 speak("Optical Face Recognition Failed")
-                break;
+                break
 
 
     
