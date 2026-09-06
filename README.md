@@ -35,6 +35,7 @@
 <li>pyjokes</li>
 <li>psutil</li>
 <li> pyautogui</li>
+<li> opencv</li>
 
 <h2>Required Packages</h2>
 
@@ -60,6 +61,7 @@ sudo apt-get update && sudo apt-get install espeak
 ### What it does...
 
   <ul>
+   <li>Dynamic Authentication using Optical Face Recognition</li>
 <li>Send emails</li>
   <li>Dynamic News Reporting at any time with api integration</li>
    <li>Optical Character Recognition (OCR)</li>
@@ -80,14 +82,22 @@ sudo apt-get update && sudo apt-get install espeak
 <table>
   <tr>
     <td><img src="images/Screenshot%20(138).png"/></td>
+      <td><img src="https://github.com/GauravSingh9356/J.A.R.V.I.S/blob/master/images/face-600x900.png"/></td>
+    
 
 </tr>
 <tr>
 <td><img src="images/email.jpg"/></td>
-
-<td><img src="images/location.png"/></td>
+<td><img src="https://github.com/GauravSingh9356/J.A.R.V.I.S/blob/master/images/maxresdefault.jpg"/></td>
 </tr>
-<td><img src="images/pytube.png"/></td>
+<td><img src="https://github.com/GauravSingh9356/J.A.R.V.I.S/blob/master/images/4-Best-Weather-Forecast-APIs-for-Development-of-Weather-Apps-624x304.jpeg"/></td>
+  <td><img src="https://github.com/GauravSingh9356/J.A.R.V.I.S/blob/master/images/maxresdefault%20(1).jpg"/></td>
+</tr>
+<tr>
+  <td><img src="canny.jpg"/>
+          </td>
+  <td><img src="ImgContor.jpg"/>
+          </td>
 </tr>
 </table>
 
